@@ -1,5 +1,6 @@
 from DnaSequence import DnaSequence
 
+#the Data class not save to file if you want to save you need to call to functions's 'self.file' (memmber of class File from File.py)
 class Data(object):
     __instance = None
 
