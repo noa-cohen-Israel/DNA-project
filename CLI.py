@@ -22,7 +22,7 @@ class CLI:
             else:
                 string = input(str(">cmd>>>"))
             if len(self.list) == 0 and str(string.split(" ")[0]) == 'run':
-                self.list = self.batch.get_run(string.split(" ")[1][1:])
+                self.list = self.batch.get_run(string.split(" ")[1])
             else:
                 try:
                     if str(string.split(" ")[0]) in ['batch','batchlist','batchshow','batchsave','batchload']:
@@ -37,6 +37,6 @@ class CLI:
                     print("command not valid")
                     success_command=1
 
-#
+
 cli=CLI()
 cli.run()
