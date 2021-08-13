@@ -62,15 +62,15 @@ class Batch():
             print( self.get_batch())
         elif command=="batchshow":
             if len(str)==1:
-                print(self.batchshow(str[0][1:]))
+                print(self.batchshow(str[0]))
         elif command=="batchsave":
             if len(str)==1:
-                self.batchsave(str[0][1:],str[0][1:])
+                self.batchsave(str[0],str[0])
             if len(str)==2:
-                self.batchsave(str[0][1:],str[1])
+                self.batchsave(str[0],str[1])
         elif command == "batchload":
             if len(str) == 1:
                 self.batchload(str[0])
             elif len(str) == 2:
-                self.batchload(str[0], str[0][1:])
+                self.batchload(str[0], str[1][1:])
 
