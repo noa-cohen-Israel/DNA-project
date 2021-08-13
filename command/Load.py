@@ -3,9 +3,9 @@ class Load:
         self.receiver = "Create"
         self.name=file_namme
 
-
     def get_name(self):
         return self.name.split(".")[0]
+
     def get_sequence(self):
         try:
             with open(self.name) as f:
@@ -13,6 +13,7 @@ class Load:
         except:
             print("load file failed")
             return False
+
     def getReceiver(self):
         return self.receiver
 

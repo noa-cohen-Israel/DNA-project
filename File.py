@@ -1,13 +1,12 @@
 import json
-class File():
 
+class File():
     def __init__(self):
-        with open("db_DNA.json") as file:
+        with open("db_DNA.json","w") as file:
             try:
                 self.data=json.load(file)
             except:
                 self.data=[]
-
 
     def write_data(self):
         with open("db_DNA.json","w") as file:
@@ -15,5 +14,6 @@ class File():
 
     def update_data(self, object):
         self.data.append(object)
+
     def get_data(self):
         return self.data

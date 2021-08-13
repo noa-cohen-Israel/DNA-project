@@ -1,8 +1,4 @@
-import json
-
 from DnaSequence import DnaSequence
-from File import File
-
 
 class Data(object):
     __instance = None
@@ -21,7 +17,6 @@ class Data(object):
             if file !=None:
                 self.updete = "00"
                 self.data = file.get_data()
-                print(self.data)
                 if len(self.data) == 0:
                     self.data.append({"id": 0, "name": 0})
                     self.data.append(dict())
@@ -53,6 +48,8 @@ class Data(object):
 
     def get_new_name(self):
         self.name += 1
+        while self.name_and_id.get(self.name)!=None:
+            self.name += 1
         self.updete="11"
         return "seq" + str(self.name)
 
@@ -61,22 +58,12 @@ class Data(object):
             return int(self.name_and_id[name])
         except:
             return False
-        # for i in self.name_and_id.keys():
-        #     if self.name_and_id[i] == name:
-        #         return i
-        # return False
 
     def get_name_by_id(self, id):
         try:
             return self.id_and_name[int(id)]
         except:
             return False
-
-    # def get_sequence_by_id(self, id):
-    #     for i in self.data:
-    #         if i["id"] == id:
-    #             return i["sequence"]
-    #     return False
 
     def get_sequence_by_name(self, name):
         try:
@@ -89,33 +76,27 @@ class Data(object):
             return self.sequence[int(id)]
         except:
             return False
-        # for i in self.data:
-        #     if i[info] == value_info:
-        #         return i["sequence"]
-        # return False
 
     def get_id_by_sequence(self,sequence):
         for i in self.sequence.keys():
             if self.sequence[i] == sequence:
                 return int(i)
         return False
-    # def get_info_by_sequence(self,sequence,info="name"):
-        # for i in self.data:
-        #     if i["sequence"] == sequence:
-        #         return i[info]
-        # return False
 
     def valid_name(self, name):
-        if name =="seq" + str(self.name) and self.updete[0]=="1":
-            self.updete="01"
+        if self.name_and_id.get(name)==None:
             return True
-        if name in list(self.name_and_id.keys())+["seq" + str(self.name)]:
-            return False
-        if name=="seq" + str(self.name+1):
-            self.name+=1
-        return True
+        return False
+
     def update_sequence_by_id(self,id,seq):
         self.sequence[int(id)]=seq
+
+    def update_name_by_id(self,id,name,new_name):
+        if not self.valid_name(new_name):
+            return "This name exist"
+        self.id_and_name[int(id)]=new_name
+        self.name_and_id.pop(name)
+        self.name_and_id[new_name]=id
 
     def add_sequence(self, name,sequence):
         if not self.valid_name(name):
@@ -131,15 +112,19 @@ class Data(object):
         self.id_and_name[id]=name
         self.sequence[id]=sequence
         self.name_and_id[name]=id
-        #לעדכן את הדטה
         sequence_json={"id":id,"name":name,"sequence":str(sequence)}
         return sequence_json
-# d=Data(File())
-# # print(d.valid_name("AA"))
-# print(d.add_sequence("seq","AAA"))
-# print(d.add_sequence("seq1","AAAs"))
-# print(d.add_sequence("3seq","AAA"))
-# print(d.get_new_name())
-# print(d.get_id_by_name("seq"))
-# f=Data.getInstance()
-# print(f.get_new_name())
+
+    def reenum_sequense(self):
+        j=1
+        for i in range(1,self.id+1):
+            name=self.id_and_name.get(i)
+            if name!=None:
+                if j!=i:
+                    self.id_and_name.pop(i)
+                    self.id_and_name[j]=name
+                    self.name_and_id[name]=j
+                    seq=self.sequence.pop(i)
+                    self.sequence[j]=seq
+                j+=1
+

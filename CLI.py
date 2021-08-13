@@ -2,7 +2,6 @@ from Data import Data
 from Factory import Factory
 from File import File
 from Batch import Batch
-from command.Run import Run
 
 
 class CLI:
@@ -23,11 +22,11 @@ class CLI:
             else:
                 string = input(str(">cmd>>>"))
             if len(self.list) == 0 and str(string.split(" ")[0]) == 'run':
-                self.list = self.batch.get_run(string.split(" ")[1])
+                self.list = self.batch.get_run(string.split(" ")[1][1:])
             else:
                 try:
-                    if str(string.split(" ")[0]) == 'batch':
-                        self.batch.switch_batch(string.split(" ")[1:])
+                    if str(string.split(" ")[0]) in ['batch','batchlist','batchshow','batchsave','batchload']:
+                        self.batch.perform_action(str(string.split(" ")[0]),string.split(" ")[1:])
                     else:
                         if len(self.list) != 0 and success_command:
                             pass

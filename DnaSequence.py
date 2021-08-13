@@ -45,7 +45,7 @@ class DnaSequence:
         return True
 
 
-
+#=====TEST======
 # # dna=DnaSequence("AAST")
 # dna=DnaSequence("AACT")
 # print(dna)

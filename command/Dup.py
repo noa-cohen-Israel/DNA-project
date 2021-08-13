@@ -7,6 +7,7 @@ class Dup:
         self.receiver = "Create"
         self.id= Parser().get_id_by_sequence(seq)
         self.seq=seq
+
     def get_name(self):
         print(self.id)
         if self.id:

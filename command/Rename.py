@@ -1,6 +1,6 @@
 from Data import Data
 
-class Save:
+class Rename:
     def __init__(self,string):
         self.receiver = "Management"
         if string[0][0] == "#":
@@ -9,18 +9,16 @@ class Save:
         else:
             self.name = string[0][1:]
             self.id = Data.getInstance().get_id_by_name(self.name)
-        self.seq=Data.getInstance().get_sequence_by_id(self.id)
-        try:
-            self.file_name=string[1]+".rawdna"
-        except:
-            self.file_name=self.name+".rawdna"
+        self.new_name=string[1][1:]
+
 
     def getReceiver(self):
         return self.receiver
 
     def run(self):
-        with open(self.file_name+".txt","w") as f:
-            f.write(f'[{self.id}] {self.name}: {self.seq}')
+        message=Data.getInstance().update_name_by_id(self.id,self.name,self.new_name)
+        if message!=None:
+            print(message)
 
 
 
